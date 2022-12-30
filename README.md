@@ -1,13 +1,18 @@
 # Learning regular languages using recurrent neural networks
 
-## Short Description
+## Description
 
-This repo contains a demonstrator for learning acceptors of (mostly regular) languages
-using an RNN acceptor that, given a word, decides whether it belongs to the language or not (binary
-classifier). The approach uses LSTM neurons (with peepholes) and requires a "language oracle" that
+Python script to train approximative acceptors of regular languages based on recurrent neural networks.
+The resulting acceptor takes a word as input and decides whether it belongs to the language or not. 
+The approach uses LSTM neurons with peepholes and requires for the training a "language oracle" that
 decides whether an arbitrary word belongs to the language or not. It uses positive and negative examples for 
-the training. 
-As an example, the first five Tomita languages are added; training works quite well for these.
+the training. The topology of the used neural net can be customized. The peephole addition proved to be crucial
+for the training to be successful for most cases.
+
+As an example, the first five Tomita languages are added. Training works quite well for these and requires
+rather few neurons. The deduced networks in `test_tomita.py` 
+appear to be even equivalent to the corresponding finite automata of the Tomita languages (loss 0 and correct 
+recognition of all words up to a given maximal size, at least in my setting).
 
 ## Used frameworks
 
@@ -18,6 +23,7 @@ Take a look at
 
 	$ test_tomita.py
 
+The necessary steps:
 - define an arbitrary language alphabet where letters correspond to chars (e.g. `['a', 'b']`), e.g. `alphabet = Alphabet(["0", "1"])`
 - define a language; it takes a name, an alphabet instance and a language oracle (Python callable). The oracle takes a word
   and returns `True` iff the word is element of the language you want to learn (third parameter of the constructor
