@@ -19,7 +19,7 @@ exactly recognize the corresponding Tomita language is future work.
 
 ## Neural net topology
 
-Dense Layers are followed by LSTM layers, then dense layers again, with two output neurons.
+Dense Layers are followed by LSTM layers, then dense layers again, and finally an output layer with two neurons (representing accepting and not accepting the word).
 The fine-grained topology of the neural net can be customized by specifying number of layers and number of neurons in these layers. 
 The peephole connection extension [Gers, Schmidhuber: Recurrent nets that time and count](https://www.researchgate.net/publication/3857862_Recurrent_nets_that_time_and_count) to the LSTM neuron proved to be crucial
 for the training to be successful - nets using standard LSTM neurons from tensorflow seem not to converge satisfactorily in this setting;
