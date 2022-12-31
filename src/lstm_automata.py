@@ -15,6 +15,7 @@ from tensorflow.python import keras
 import numpy as np
 import keras as K
 
+tf.keras.utils.set_random_seed(42)
 logging.getLogger().setLevel(logging.DEBUG)
 sys.set_int_max_str_digits(20000)
 
@@ -278,48 +279,50 @@ class LSTMAutomataLearner:
                 zip(X_all_words_of_length_batches, Y_all_words_of_length_batches)
             )
             random.shuffle(length_tests)
-            for (X_instance, Y_instance) in length_tests:
-                logging.info(
-                    "Learning all words of length: %s, training set size: %s"
-                    % (X_instance[0].shape[0], X_instance.shape[0])
-                )
+            logging.info("Learning all words of maximal specified length")
+            for (X_instance, Y_instance) in tqdm.tqdm(length_tests):
+                # logging.info(
+                #    "Learning all words of length: %s, training set size: %s"
+                #     % (X_instance[0].shape[0], X_instance.shape[0])
+                # )
                 history = self._model.fit(
                     X_instance, Y_instance, epochs=epochs_complete, verbose=0
                 )
-                logging.info("....Last loss: %s" % history.history["loss"][-1])
+                #logging.info("....Last loss: %s" % history.history["loss"][-1])
 
         def train_random_batches():
             random_tests = list(zip(X_random_batches, Y_random_batches))
             random.shuffle(random_tests)
+            logging.info("Learning random words")
             for (X_instance, Y_instance) in tqdm.tqdm(random_tests):
-                logging.info(
-                    "Learning random words, length: %s, training set size: %s"
-                    % (X_instance.shape[0], Y_instance.shape[0])
-                )
+                # logging.info(
+                #    "Learning random words, length: %s, training set size: %s"
+                #    % (X_instance.shape[0], Y_instance.shape[0])
+                # )
                 history = self._model.fit(
                     X_instance, Y_instance, epochs=epochs_random, verbose=0
                 )
-                logging.info("Last loss: %s" % history.history["loss"][-1])
+                # logging.info("Last loss: %s" % history.history["loss"][-1])
 
         def is_precision_sufficient():
             """Tests loss on test set; saves model and returns True iff loss is sufficiently small."""
             logging.info("Test all random test cases to assess current loss.")
             random_tests = list(zip(X_test_batches, Y_test_batches))
-            random.shuffle(random_tests)
             # Check whether maybe all batches are already satsifiably good approximateed
             scores_satisfied = True
             for (X_instance, Y_instance) in random_tests:
                 logging.info(
                     "Testing random words, length: %s, size: %s"
-                    % (X_instance.shape[0], Y_instance.shape[0])
+                    % (X_instance.shape[1], Y_instance.shape[0])
                 )
                 score = self._model.evaluate(X_instance, Y_instance, verbose=0)
-                logging.info("Test loss: %s", score[0])
+                # logging.info("Test loss: %s", score[0])
                 if score[0] <= 0.0001:
-                    logging.info("Small loss for random sample...")
+                    logging.info("Loss %s sufficiently small for random sample." % score[0])
                 else:
                     logging.info(
-                        "Loss too large for considering this language as learned."
+                        "Loss is %s, too large for considering this language as learned."
+                        % score[0]
                     )
                     scores_satisfied = False
                     break
@@ -345,7 +348,7 @@ class LSTMAutomataLearner:
 
             if precision_sufficient:
                 logging.info("Considering training successful.")
-                self._model.save("MODEL_SAVED_SUCCESFUL_%s" % name_of_saved_model)
+                self._model.save("MODEL_SAVED_SUCCESFULL_%s" % name_of_saved_model)
                 return True
 
         logging.info("Failed in training model.")

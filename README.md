@@ -1,24 +1,39 @@
 # Learning regular languages using recurrent neural networks
 
+
 ## Description
+-----
 
 Python script to train approximative acceptors of regular languages based on recurrent neural networks.
 The resulting acceptor takes a word as input and decides whether it belongs to the language or not. 
 The approach uses LSTM neurons with peepholes and requires for the training a "language oracle" that
 decides whether an arbitrary word belongs to the language or not. It uses positive and negative examples for 
-the training. The topology of the used neural net can be customized. The peephole addition proved to be crucial
-for the training to be successful for most cases.
+the training (quite a lot of them, most of the cases ca. 1000 words). 
 
-As an example, the first five Tomita languages are added. Training works quite well for these and requires
+
+As an example, the seven Tomita languages are added; these are often used for benchmarking automata learning techniques.
+Training works quite well for these and requires
 rather few neurons. The deduced networks in `test_tomita.py` 
-appear to be even equivalent to the corresponding finite automata of the Tomita languages (loss 0 and correct 
-recognition of all words up to a given maximal size, at least in my setting).
+appear to be even often equivalent to the corresponding finite automata of the Tomita languages (loss 0 and correct 
+recognition of all words up to a given maximal size, at least in my setting). Checking whether the acceptors in fact 
+exactly recognize the corresponding Tomita language is future work.
+
+## Used neural net topology
+-----
+Dense Layers are followed by LSTM layers, then dense layers again, with two output neurons.
+The fine-grained topology of the neural net can be customized by specifying number of layers and number of neurons in these layers. 
+The peephole connection extension [Gers, Schmidhuber: Recurrent nets that time and count](https://www.researchgate.net/publication/3857862_Recurrent_nets_that_time_and_count) to the LSTM neuron proved to be crucial
+for the training to be successful - nets using standard LSTM neurons from tensorflow seem not to converge satisfactorily in this setting;
+the used LSTM cell is [`tfa.rnn.PeepholeLSTMCell`](https://www.tensorflow.org/addons/api_docs/python/tfa/rnn/PeepholeLSTMCell).
 
 ## Used frameworks
+-----
 
-TensorFlow and Keras.
+TensorFlow and Keras. You will need the Python packages `numpy`, `tensorflow`, `tensorflow_addons` and `keras`.
 
 ## How to use it
+-----
+
 Take a look at 
 
 	$ test_tomita.py
