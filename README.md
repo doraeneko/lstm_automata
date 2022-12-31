@@ -13,7 +13,7 @@ the training (quite a lot of them, most of the cases ca. 1000 words).
 As an example, the seven Tomita languages are added; these are often used for benchmarking automata learning techniques.
 Training works quite well for these and requires
 rather few neurons. The deduced networks in `test_tomita.py` 
-appear to be even often equivalent to the corresponding finite automata of the Tomita languages (loss 0 and correct 
+appear to equivalent to the corresponding finite automata of the Tomita languages in many cases (loss 0 and correct 
 recognition of all words up to a given maximal size, at least in my setting). Checking whether the acceptors in fact 
 exactly recognize the corresponding Tomita language is future work.
 
