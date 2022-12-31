@@ -17,7 +17,7 @@ appear to be even often equivalent to the corresponding finite automata of the T
 recognition of all words up to a given maximal size, at least in my setting). Checking whether the acceptors in fact 
 exactly recognize the corresponding Tomita language is future work.
 
-## Used neural net topology
+## Neural net topology
 
 Dense Layers are followed by LSTM layers, then dense layers again, with two output neurons.
 The fine-grained topology of the neural net can be customized by specifying number of layers and number of neurons in these layers. 
@@ -25,7 +25,7 @@ The peephole connection extension [Gers, Schmidhuber: Recurrent nets that time a
 for the training to be successful - nets using standard LSTM neurons from tensorflow seem not to converge satisfactorily in this setting;
 the used LSTM cell is [`tfa.rnn.PeepholeLSTMCell`](https://www.tensorflow.org/addons/api_docs/python/tfa/rnn/PeepholeLSTMCell).
 
-## Used frameworks
+## Frameworks
 
 TensorFlow and Keras. You will need the Python packages `numpy`, `tensorflow`, `tensorflow_addons` and `keras`.
 
