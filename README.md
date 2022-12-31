@@ -2,7 +2,6 @@
 
 
 ## Description
------
 
 Python script to train approximative acceptors of regular languages based on recurrent neural networks.
 The resulting acceptor takes a word as input and decides whether it belongs to the language or not. 
@@ -19,7 +18,7 @@ recognition of all words up to a given maximal size, at least in my setting). Ch
 exactly recognize the corresponding Tomita language is future work.
 
 ## Used neural net topology
------
+
 Dense Layers are followed by LSTM layers, then dense layers again, with two output neurons.
 The fine-grained topology of the neural net can be customized by specifying number of layers and number of neurons in these layers. 
 The peephole connection extension [Gers, Schmidhuber: Recurrent nets that time and count](https://www.researchgate.net/publication/3857862_Recurrent_nets_that_time_and_count) to the LSTM neuron proved to be crucial
@@ -27,12 +26,10 @@ for the training to be successful - nets using standard LSTM neurons from tensor
 the used LSTM cell is [`tfa.rnn.PeepholeLSTMCell`](https://www.tensorflow.org/addons/api_docs/python/tfa/rnn/PeepholeLSTMCell).
 
 ## Used frameworks
------
 
 TensorFlow and Keras. You will need the Python packages `numpy`, `tensorflow`, `tensorflow_addons` and `keras`.
 
 ## How to use it
------
 
 Take a look at 
 
