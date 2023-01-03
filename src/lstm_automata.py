@@ -100,7 +100,7 @@ def custom_sigmoid_20(x):
 
 
 def custom_sigmoid_50(x):
-    return keras.backend.sigmoid(20 * x)
+    return keras.backend.sigmoid(50 * x)
 
 
 def global_is_accepting(word):
@@ -157,6 +157,8 @@ class LSTMAutomataLearner:
                     return_sequences=lstm_layer_index != lstm_layers_count - 1,
                 )
                 model.add(rnn)
+                model.add(tf.keras.layers.Normalization())
+                model.add(tf.keras.layers.Dropout(.3))
         for post_dense_layer_size in self._topology.dense_layers_before_lstm:
             model.add(
                 keras.layers.Dense(

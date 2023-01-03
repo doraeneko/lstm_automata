@@ -172,9 +172,9 @@ def tomita_6():
         lambda word: len(word) >= 1 and (word.count("0") - word.count("1")) % 3 == 0,
     )
     topology = NeuralNetTopology(
-        dense_layers_before_lstm=[5],
-        dense_layers_after_lstm=[5],
-        lstm_layers=[5],
+        dense_layers_before_lstm=[10],
+        dense_layers_after_lstm=[10],
+        lstm_layers=[10,10],
         #   dense_layers_before_lstm=[10, 10],
         #   dense_layers_after_lstm=[10, 10],
         #   lstm_layers=[16, 16],
@@ -183,7 +183,7 @@ def tomita_6():
     learner.train(
         name_of_saved_model="model_for_%s" % language.name(),
         all_words_of_max_length=6,
-        number_random_words=1000,
+        number_random_words=500,
         max_length_random_words=100,
         epochs_complete=100,
         epochs_random=10,
@@ -277,6 +277,6 @@ if __name__ == "__main__":
     tomita_3()
     tomita_4()
     tomita_5()
-    # tomita_6()
+    tomita_6()
     tomita_7()
     # custom_language_1()

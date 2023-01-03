@@ -42,7 +42,7 @@ of `Language`, e.g. ` lambda word: len(word) >= 1 and word.find("0") == -1`)
 - define a net topology by specifying an instance of `NeuralNetTopology`; a net is always structured as follows:
 	 1. input layer; its size corresponds to the number of alphabet letters (one-hot-encoding of letters)
 	 2. 0 or more dense network layers: specify number and size of layers with `dense_layers_before_lstm`. E.g., `dense_layers_before_lstm=[50, 10]` will build two layers, first 50 units, second 10 units
-	 3. 1 or more LSTM layers: specify using `lstm_layers`
+	 3. 1 or more LSTM layers: specify using `lstm_layers`; each one is automatically succeeded by a `Normalization` layer and a `Dropout(0.3)` layer
 	 4. 0 or more dense layers: specify using `dense_layers_after_lstm`
 	 5. final layer with two outputs (accepting and not accepting outcomes)
 - create an `LSTMAutomataLearner` instance: `learner = LSTMAutomataLearner(language, topology)`
