@@ -142,16 +142,18 @@ def tomita_5():
         and word.count("1") % 2 == 0,
     )
     topology = NeuralNetTopology(
-        dense_layers_before_lstm=[10], dense_layers_after_lstm=[10], lstm_layers=[10]
+        dense_layers_before_lstm=[10, 10],
+        dense_layers_after_lstm=[10, 10],
+        lstm_layers=[16, 16],
     )
     learner = LSTMAutomataLearner(language, topology)
     learner.train(
         name_of_saved_model="model_for_%s" % language.name(),
         all_words_of_max_length=5,
-        number_random_words=500,
+        number_random_words=1000,
         max_length_random_words=100,
         epochs_complete=1000,
-        epochs_random=10,
+        epochs_random=20,
         max_global_iterations=1000,
     )
     for i in range(1, 18):
@@ -170,18 +172,21 @@ def tomita_6():
         lambda word: len(word) >= 1 and (word.count("0") - word.count("1")) % 3 == 0,
     )
     topology = NeuralNetTopology(
-        dense_layers_before_lstm=[10],
-        dense_layers_after_lstm=[10],
-        lstm_layers=[16],
+        dense_layers_before_lstm=[5],
+        dense_layers_after_lstm=[5],
+        lstm_layers=[5],
+        #   dense_layers_before_lstm=[10, 10],
+        #   dense_layers_after_lstm=[10, 10],
+        #   lstm_layers=[16, 16],
     )
     learner = LSTMAutomataLearner(language, topology)
     learner.train(
         name_of_saved_model="model_for_%s" % language.name(),
-        all_words_of_max_length=5,
+        all_words_of_max_length=6,
         number_random_words=1000,
         max_length_random_words=100,
-        epochs_complete=1000,
-        epochs_random=50,
+        epochs_complete=100,
+        epochs_random=10,
         max_global_iterations=1000,
     )
     for i in range(1, 18):
@@ -202,9 +207,12 @@ def tomita_7():
         lambda word: len(word) >= 1 and (pattern.match(word) is not None),
     )
     topology = NeuralNetTopology(
-        dense_layers_before_lstm=[10, 10],
+        dense_layers_before_lstm=[10],
         dense_layers_after_lstm=[10],
-        lstm_layers=[10, 10],
+        lstm_layers=[16, 16],
+        #    dense_layers_before_lstm=[10, 10],
+        #    dense_layers_after_lstm=[10, 10],
+        #    lstm_layers=[16, 16],
     )
     learner = LSTMAutomataLearner(language, topology)
     learner.train(
@@ -212,8 +220,8 @@ def tomita_7():
         all_words_of_max_length=5,
         number_random_words=2000,
         max_length_random_words=100,
-        epochs_complete=1000,
-        epochs_random=50,
+        epochs_complete=500,
+        epochs_random=20,
         max_global_iterations=1000,
     )
     for i in range(1, 18):
@@ -269,6 +277,6 @@ if __name__ == "__main__":
     tomita_3()
     tomita_4()
     tomita_5()
-    tomita_6()
+    # tomita_6()
     tomita_7()
     # custom_language_1()
