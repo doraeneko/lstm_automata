@@ -10,7 +10,7 @@ decides whether an arbitrary word belongs to the language or not. It uses positi
 the training (quite a lot of them, in most of the cases ca. 1000 words). 
 
 As an example, the seven Tomita languages are investigated. These are often used for benchmarking automata learning techniques.
-Training works quite well for (except for Tomita-6) and requires
+Training works quite well for and requires
 rather few neurons. The deduced networks in `test_tomita.py` 
 appear to equivalent to the corresponding finite automata of the Tomita languages in many cases (loss 0 and correct 
 recognition of all words up to a given maximal size, at least in my setting). Checking whether the acceptors in fact 
